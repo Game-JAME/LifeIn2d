@@ -10,22 +10,16 @@ public class PlayerMovement : MonoBehaviour
      [SerializeField] Slider Foodslider;
     [SerializeField] Slider Healthslider;
 
-    [SerializeField] Transform transform ;
+    [SerializeField] Transform playerPos ;
 
-    [SerializeField] Food food;
-  //  [SerializeField] Water water;
     [SerializeField] float speed;
      [SerializeField] float reduceSpeed;
 
     void Start()
      {
-        
-        food=FindObjectOfType<Food>();
-     //   water=FindObjectOfType<Water>();    
-        
-        WaterSlider.value = 100;
-        Foodslider.value = 100;
-        Healthslider.value = 100;
+        WaterSlider.value = 1000;
+        Foodslider.value = 1000;
+        Healthslider.value = 1000;
    }
 
      // Update is called once per frame
@@ -50,18 +44,18 @@ public class PlayerMovement : MonoBehaviour
          Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
 
          // move the game object
-         transform.position += movement;
+         playerPos.position += movement;
      }
 
     public void UpdateWaterSliderValue(float value)
     {
-         WaterSlider.value = value;
+         WaterSlider.value += value;
        
        
     }
     public void UpdateFoodSliderValue(float value)
     {
-        Foodslider.value = value;
+        Foodslider.value += value;
     }
     public void UpdateHealthSliderValue(float value)
     {
