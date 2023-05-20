@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     
@@ -29,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
 
      // Update is called once per frame
      void Update()
-
      {
 
          WaterSlider.value -= reduceSpeed*Time.deltaTime;
@@ -38,6 +38,9 @@ public class PlayerMovement : MonoBehaviour
           if(WaterSlider.value <= 0 || Foodslider.value<=0) 
           {
               Healthslider.value -= reduceSpeed*Time.deltaTime;
+          }
+          if(Healthslider.value==0){
+             SceneManager.LoadScene(2);
           }
 
         float horizontalInput = Input.GetAxis("Horizontal"); // get the value of the horizontal input axis
@@ -65,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
         if(WaterSlider.value!=0 &&Foodslider.value!=0)
         {
             Healthslider.value += value;
-
         }
         }
 }
