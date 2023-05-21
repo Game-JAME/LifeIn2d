@@ -68,6 +68,13 @@ public class PlayerMovement : MonoBehaviour
         if(collider.CompareTag("Projectile")){
             Healthslider.value-=100;
         }
+     
+      if(collider.CompareTag("Enemy")){
+          Healthslider.value-=200;
+          Vector2 randomDis = new Vector2(Random.Range(transform.position.x+10,transform.position.x-10),Random.Range(transform.position.y+10,transform.position.y-10));
+          transform.position=randomDis;
+      }
+    
      }
 
 }

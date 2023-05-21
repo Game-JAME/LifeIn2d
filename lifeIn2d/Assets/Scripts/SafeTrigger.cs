@@ -6,8 +6,9 @@ public class SafeTrigger : MonoBehaviour
 {
  
    public Enemy[] enemy;
+   public ShootingEnemy[] shootingEnemies;
     void Start(){
-   
+   shootingEnemies=FindObjectsOfType<ShootingEnemy>();
       enemy=FindObjectsOfType<Enemy>();
       }
     
@@ -17,12 +18,22 @@ public class SafeTrigger : MonoBehaviour
     {
         enemy[i].HasTriggered=true;
     }
+    for (int i = 0; i < shootingEnemies.Length; i++)
+    {
+        shootingEnemies[i].SafeTrigger=true;
+    }
+
    }
    void OnTriggerExit2D(Collider2D collider){
        for (int i = 0; i < enemy.Length; i++)
     {
         enemy[i].HasTriggered=false;
     }
+     for (int i = 0; i < shootingEnemies.Length; i++)
+    {
+        shootingEnemies[i].SafeTrigger=false;
+    }
+
    }
   
 }
