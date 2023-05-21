@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] float speed;
      [SerializeField] float reduceSpeed;
-
+  
     void Start()
      {
         WaterSlider.value = 1000;
@@ -63,5 +63,11 @@ public class PlayerMovement : MonoBehaviour
         {
             Healthslider.value += value;
         }
+     }
+     void OnTriggerEnter2D(Collider2D collider){
+        if(collider.CompareTag("Projectile")){
+            Healthslider.value-=100;
         }
+     }
+
 }
