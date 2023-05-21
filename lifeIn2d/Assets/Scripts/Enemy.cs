@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         player=GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        
     }
 
     // Update is called once per frame
@@ -32,11 +33,17 @@ public class Enemy : MonoBehaviour
             // Move the enemy towards the player
             transform.Translate(direction * moveSpeed * Time.deltaTime);
         }else{
+          if(orginalPos==null)
+          { transform.position=this.transform.position;}
+          else{
+
            transform.position= Vector2.MoveTowards(transform.position,orginalPos.position,moveSpeed*Time.deltaTime);
 
+          }
         }
      //   if(HasTriggered==true){
       // enemyPos.position=Vector2.MoveTowards(transform.position,player.position,speed*Time.deltaTime);
       //  }
     }
+    
 }
