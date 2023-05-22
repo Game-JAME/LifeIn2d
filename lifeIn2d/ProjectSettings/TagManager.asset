@@ -6,11 +6,13 @@ TagManager:
   tags:
   - Enemy
   - Projectile
+  - Boss
+  - BossArea
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Base
   - Water
   - UI
   - 
