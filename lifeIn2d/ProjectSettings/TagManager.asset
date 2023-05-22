@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - Boss
   - BossArea
+  - Coin
   layers:
   - Default
   - TransparentFX

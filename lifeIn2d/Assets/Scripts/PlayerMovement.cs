@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
      [SerializeField] Slider WaterSlider;
      [SerializeField] Slider Foodslider;
     [SerializeField] Slider Healthslider;
+
+    [SerializeField] int coinCount;
     [SerializeField] Boss boss;
     [SerializeField] Transform playerPos ;
 
@@ -79,6 +81,17 @@ public class PlayerMovement : MonoBehaviour
             Healthslider.value += value;
         }
      }
+
+    public void UpdateCoinCount(int val)
+    {
+        coinCount += val;
+    }
+
+    public int GetCoinCount()
+    {
+        return coinCount;
+    }
+
      void OnTriggerEnter2D(Collider2D collider){
         if(collider.CompareTag("Projectile")){
             Healthslider.value-=100;
