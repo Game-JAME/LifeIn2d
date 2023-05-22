@@ -41,17 +41,16 @@ public class PlayerMovement : MonoBehaviour
             SceneManager.LoadScene(2);
         }
 
-        float horizontalInput = Input.GetAxis("Horizontal"); // get the value of the horizontal input axis
-        float verticalInput = Input.GetAxis("Vertical"); // get the value of the vertical input axis
+        float horizontalInput = ((Input.GetAxis("Horizontal"))); // get the value of the horizontal input axis
+        float verticalInput = ((Input.GetAxis("Vertical"))); // get the value of the vertical input axis
 
-        // calculate the movement vector based on the input and the speed
+       // calculate the movement vector based on the input and the speed
         Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
         // move the game object
         playerPos.position += movement;
         transform.right = movement;
         Debug.Log(horizontalInput);
         Debug.Log(verticalInput);
-        isWalking = movement != Vector3.zero;
     }
 
     public void UpdateWaterSliderValue(float value)
