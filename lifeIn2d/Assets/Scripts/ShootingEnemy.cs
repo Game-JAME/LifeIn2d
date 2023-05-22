@@ -19,6 +19,7 @@ public float Startimeshot;
       public float moveSpeed = 5f; 
     public float detectionRadius = 5f;
     public bool SafeTrigger=false;
+      public float Health = 50f;
 void Start()
     {
         timeShot=Startimeshot;
@@ -28,6 +29,9 @@ void Update(){
       float distance = Vector2.Distance(player.position, transform.position);
 
      
+       if(Health==0f){
+         DestroyEnemy(true);
+       }
     if(SafeTrigger==false)
     {
         if (distance <= detectionRadius &&distance>retreatDistance)
@@ -58,5 +62,13 @@ void Update(){
         timeShot-=Time.deltaTime;
         }
 
+    
      }
+   public void DestroyEnemy(bool value){
+     if(value==true){
+      Destroy(gameObject);
+     }
+  
+
+    }
 }

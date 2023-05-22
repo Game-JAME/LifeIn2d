@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     public bool HasTriggered=false;
       public float moveSpeed = 5f; // The speed at which the enemy moves
     public float detectionRadius = 5f; // The radius within which the player triggers the movement
+    public float Health = 100f;
 
     void Start()
     {
@@ -41,9 +42,19 @@ public class Enemy : MonoBehaviour
 
           }
         }
+       if(Health==0f){
+         DestroyEnemy(true);
+       }
      //   if(HasTriggered==true){
       // enemyPos.position=Vector2.MoveTowards(transform.position,player.position,speed*Time.deltaTime);
       //  }
     }
-    
+   public void DestroyEnemy(bool value){
+     if(value==true){
+      Destroy(gameObject);
+     }
+   }
+    public void TakeDamage(int value){
+      Health-=value;
+    }
 }
