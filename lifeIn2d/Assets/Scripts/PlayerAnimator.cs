@@ -12,7 +12,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         // Changes the animation as the movement is more the zero or not 
-        animator.SetBool(IS_WALKING, playerMovement.IsWalking());
+       // animator.SetBool(IS_WALKING, playerMovement.IsWalking());
     }
 
     private void Update()
