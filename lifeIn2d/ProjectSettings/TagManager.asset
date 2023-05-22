@@ -6,11 +6,14 @@ TagManager:
   tags:
   - Enemy
   - Projectile
+  - Boss
+  - BossArea
+  - Coin
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Base
   - Water
   - UI
   - 

@@ -10,11 +10,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Slider Foodslider;
     [SerializeField] Slider Healthslider;
 
+    [SerializeField] int coinCount;
+    [SerializeField] Boss boss;
     [SerializeField] Transform playerPos;
 
     [SerializeField] float speed;
     [SerializeField] float reduceSpeed;
+    [SerializeField] float rotateSpeed;
+    private bool isFacingRight = true;
 
+    float horizontalInput;
+    float verticalInput;
     private Animator animator;
     private bool isWalking;
 
@@ -23,11 +29,13 @@ public class PlayerMovement : MonoBehaviour
         WaterSlider.value = 1000;
         Foodslider.value = 1000;
         Healthslider.value = 1000;
-    }
+ 
+         boss=FindObjectOfType<Boss>();  
+   }
 
-    // Update is called once per frame
-    void Update()
-    {
+   
+     void Update()
+     {
 
         WaterSlider.value -= reduceSpeed * Time.deltaTime;
         Foodslider.value -= reduceSpeed * Time.deltaTime;
@@ -41,18 +49,31 @@ public class PlayerMovement : MonoBehaviour
             SceneManager.LoadScene(2);
         }
 
-        float horizontalInput = ((Input.GetAxis("Horizontal"))); // get the value of the horizontal input axis
-        float verticalInput = ((Input.GetAxis("Vertical"))); // get the value of the vertical input axis
+        horizontalInput = Input.GetAxisRaw("Horizontal"); 
+        verticalInput = Input.GetAxisRaw("Vertical"); 
 
-       // calculate the movement vector based on the input and the speed
+         // calculate the movement vector based on the input and the speed
         Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
-        // move the game object
+
+         // move the game object
         playerPos.position += movement;
         transform.right = movement;
+        Flip();
+
         Debug.Log(horizontalInput);
         Debug.Log(verticalInput);
-    }
+     }
 
+    private void Flip()
+    {
+        if (isFacingRight && horizontalInput < 0f || !isFacingRight && horizontalInput > 0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
     public void UpdateWaterSliderValue(float value)
     {
         WaterSlider.value += value;
@@ -69,12 +90,23 @@ public class PlayerMovement : MonoBehaviour
         {
             Healthslider.value += value;
         }
-    }
-    void OnTriggerEnter2D(Collider2D collider)
+     }
+
+    public void UpdateCoinCount(int val)
     {
-        if (collider.CompareTag("Projectile"))
-        {
-            Healthslider.value -= 100;
+        coinCount += val;
+    }
+
+    public int GetCoinCount()
+    {
+        return coinCount;
+    }
+
+     void OnTriggerEnter2D(Collider2D collider){
+        if(collider.CompareTag("Projectile")){
+            Healthslider.value-=100;
+             Vector2 randomDis = new Vector2(Random.Range(transform.position.x+10,transform.position.x-10),Random.Range(transform.position.y+10,transform.position.y-10));
+          transform.position=randomDis;
         }
 
         if (collider.CompareTag("Enemy"))
@@ -83,8 +115,11 @@ public class PlayerMovement : MonoBehaviour
             Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
             transform.position = randomDis;
         }
-
+        if(collider.CompareTag("BossArea")){
+        boss.Fightstarted=true;
+        }
     }
+
     // Returns the bool value of the trigger "IsWalking"
     public bool IsWalking()
     {
