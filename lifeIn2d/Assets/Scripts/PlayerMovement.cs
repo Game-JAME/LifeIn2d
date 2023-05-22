@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
     private Animator animator;
-    private bool isWalking;
+    private bool isWalking = false;
 
     void Start()
     {
@@ -54,14 +54,20 @@ public class PlayerMovement : MonoBehaviour
 
          // calculate the movement vector based on the input and the speed
         Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
-
+         
          // move the game object
         playerPos.position += movement;
-        transform.right = movement;
+        //transform.right = movement;
+        if( horizontalInput ==0 && verticalInput == 0){
+            isWalking=false;
+        }
+        else { 
+            isWalking = true;
+        }
         Flip();
 
-        Debug.Log(horizontalInput);
-        Debug.Log(verticalInput);
+        //Debug.Log(isWalking);
+        //Debug.Log(verticalInput);
      }
 
     private void Flip()
