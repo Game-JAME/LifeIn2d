@@ -79,13 +79,13 @@ public float Startimeshot;
     
     void DashTowardsPlayer()
     {
-        Vector3 direction = (playerPos.position - transform.position).normalized;
+        Vector2 direction = (playerPos.position - transform.position).normalized;
         StartCoroutine(DashCoroutine(direction));
         canDash = false;
         Invoke(nameof(ResetDash), dashCooldown);
     }
 
-    IEnumerator DashCoroutine(Vector3 direction)
+    IEnumerator DashCoroutine(Vector2 direction)
     {
         float timer = 0f;
         while (timer < dashDuration)
@@ -98,6 +98,6 @@ public float Startimeshot;
 
     void ResetDash()
     {
-        canDash = true;
+        canDash = false;
     }
 }

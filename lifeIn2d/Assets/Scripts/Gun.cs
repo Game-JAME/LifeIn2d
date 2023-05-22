@@ -4,22 +4,37 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-  public GameObject bulletPrefab;
+  public GameObject projectile;
     public float bulletSpeed = 10f;
-
+    public float offset;
+     public Transform shotPoint;
+   
+     private float timeBtwShots;
+    public float startTimeBtwShots;
+   
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        
+           Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
+
+        if (timeBtwShots <= 0)
         {
-            FireBullet();
+            if (Input.GetMouseButton(0))
+            {
+               // Instantiate(shotEffect, shotPoint.position, Quaternion.identity);
+                //camAnim.SetTrigger("shake");
+                Instantiate(projectile, shotPoint.position, transform.rotation);
+                timeBtwShots = startTimeBtwShots;
+            }
+        }
+        else {
+            timeBtwShots -= Time.deltaTime;
         }
     }
 
-    void FireBullet()
-    {
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-        Rigidbody2D bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
-        bulletRigidbody.velocity = transform.forward * bulletSpeed;
+   
     }
 
-}
+
