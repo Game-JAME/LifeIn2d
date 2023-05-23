@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]TextMeshProUGUI coinText; 
     [SerializeField] Slider WaterSlider;
     [SerializeField] Slider Foodslider;
-    [SerializeField] Slider Healthslider;
+    [SerializeField]public Slider Healthslider;
 
     [SerializeField]public  int coinCount;
     [SerializeField] Boss boss;
@@ -111,17 +111,17 @@ public class PlayerMovement : MonoBehaviour
 
      void OnTriggerEnter2D(Collider2D collider){
         if(collider.CompareTag("Projectile")){
-            Healthslider.value-=100;
-             Vector2 randomDis = new Vector2(Random.Range(transform.position.x+10,transform.position.x-10),Random.Range(transform.position.y+10,transform.position.y-10));
-          transform.position=randomDis;
+          Healthslider.value-=100;
+            Vector2 randomDis = new Vector2(Random.Range(transform.position.x+10,transform.position.x-10),Random.Range(transform.position.y+10,transform.position.y-10));
+         transform.position=randomDis;
         }
 
-        if (collider.CompareTag("Enemy"))
-        {
-            Healthslider.value -= 200;
-            Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
-            transform.position = randomDis;
-        }
+      //  if (collider.CompareTag("Enemy"))
+      //  {
+       //     Healthslider.value -= 200;
+       //     Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
+       ///     transform.position = randomDis;
+       // }
         if(collider.CompareTag("BossArea")){
         boss.Fightstarted=true;
        

@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]Transform player;
     [SerializeField]int minDistance;
     [SerializeField]Transform orginalPos;
-    
+    [SerializeField]PlayerMovement playerMovement;
     public bool HasTriggered=false;
       public float moveSpeed = 5f; // The speed at which the enemy moves
     public float detectionRadius = 5f; // The radius within which the player triggers the movement
@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         player=GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        
+        playerMovement=FindObjectOfType<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -42,12 +42,22 @@ public class Enemy : MonoBehaviour
 
           }
         }
-       if(Health==0f){
+       if(Health<=0f){
          DestroyEnemy(true);
        }
      //   if(HasTriggered==true){
       // enemyPos.position=Vector2.MoveTowards(transform.position,player.position,speed*Time.deltaTime);
       //  }
+    }
+    void OnTriggerEnter2D(Collider2D collider){
+      if(collider.CompareTag("Player")){
+        playerMovement.Healthslider.value-=100;
+        Vector2 randomDis = new Vector2(Random.Range(transform.position.x+10,transform.position.x-10),Random.Range(transform.position.y+10,transform.position.y-10));
+          player.position=randomDis;
+      }
+      if(collider.CompareTag("Sword")){
+        Health-=30;
+      }
     }
    public void DestroyEnemy(bool value){
      if(value==true){
