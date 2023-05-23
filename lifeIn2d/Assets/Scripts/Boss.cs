@@ -35,7 +35,7 @@ public float Startimeshot;
        playerPos=GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
        player=FindObjectOfType<PlayerMovement>();
        
-    }
+    }   
 
     // Update is called once per frame
     void Update()
@@ -60,22 +60,13 @@ public float Startimeshot;
           else{
             timeShot-=Time.deltaTime;
         }
-       if( Healthslider.value < maxHealth*50/100){
-          FinalMode();
-          canDash=true;
-       }
-         
-        if (canDash)
-        {
-            DashTowardsPlayer();
-        }
+       if( Healthslider.value < maxHealth*50/100){ 
+           DashTowardsPlayer(); 
+         }
+       
        }
     }
-    public void FinalMode(){
-     // moveSpeed+=2;
-     canDash=true;
-    }
-
+  
     
     void DashTowardsPlayer()
     {

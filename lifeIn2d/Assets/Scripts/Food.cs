@@ -19,8 +19,11 @@ public class Food : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            if(player.coinCount>=2){
             player.UpdateFoodSliderValue(100);
             player.UpdateHealthSliderValue(50);
+            player.coinCount-=2;
+            }
 
         }
     }

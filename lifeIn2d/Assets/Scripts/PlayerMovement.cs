@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
-
+    [SerializeField]TextMeshProUGUI coinText; 
     [SerializeField] Slider WaterSlider;
     [SerializeField] Slider Foodslider;
-    [SerializeField] Slider Healthslider;
+    [SerializeField]public Slider Healthslider;
 
-    [SerializeField] int coinCount;
+    [SerializeField]public  int coinCount;
     [SerializeField] Boss boss;
     [SerializeField] Transform playerPos;
 
@@ -24,19 +25,20 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private bool isWalking = false;
 
+    
     void Start()
     {
         WaterSlider.value = 1000;
         Foodslider.value = 1000;
         Healthslider.value = 1000;
- 
+      // coinText=GetComponent<TextMeshProUGUI>();
          boss=FindObjectOfType<Boss>();  
    }
 
    
      void Update()
      {
-
+      coinText.text=$"Coins collected: {coinCount}";
         WaterSlider.value -= reduceSpeed * Time.deltaTime;
         Foodslider.value -= reduceSpeed * Time.deltaTime;
 
@@ -53,8 +55,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical"); 
 
          // calculate the movement vector based on the input and the speed
-        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
-         
+        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;          
          // move the game object
         playerPos.position += movement;
         //transform.right = movement;
@@ -110,22 +111,27 @@ public class PlayerMovement : MonoBehaviour
 
      void OnTriggerEnter2D(Collider2D collider){
         if(collider.CompareTag("Projectile")){
-            Healthslider.value-=100;
-             Vector2 randomDis = new Vector2(Random.Range(transform.position.x+10,transform.position.x-10),Random.Range(transform.position.y+10,transform.position.y-10));
-          transform.position=randomDis;
+          Healthslider.value-=100;
+            Vector2 randomDis = new Vector2(Random.Range(transform.position.x+10,transform.position.x-10),Random.Range(transform.position.y+10,transform.position.y-10));
+         transform.position=randomDis;
         }
 
-        if (collider.CompareTag("Enemy"))
-        {
-            Healthslider.value -= 200;
-            Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
-            transform.position = randomDis;
-        }
+      //  if (collider.CompareTag("Enemy"))
+      //  {
+       //     Healthslider.value -= 200;
+       //     Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
+       ///     transform.position = randomDis;
+       // }
         if(collider.CompareTag("BossArea")){
         boss.Fightstarted=true;
+       
         }
-    }
-
+        if(collider.CompareTag("Boss")){
+              Healthslider.value -= 300;
+          Vector2 randomDis = new Vector2(Random.Range(transform.position.x+20,transform.position.x-20),Random.Range(transform.position.y+20,transform.position.y-20));
+          transform.position=randomDis;
+       }
+ }
     // Returns the bool value of the trigger "IsWalking"
     public bool IsWalking()
     {

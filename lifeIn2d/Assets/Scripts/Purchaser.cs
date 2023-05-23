@@ -20,7 +20,7 @@ public class Purchaser : MonoBehaviour
             //
             // coming soon... code to display item details
             //
-
+           
             playerInside = true; 
             
         }
@@ -40,7 +40,8 @@ public class Purchaser : MonoBehaviour
                 Debug.Log(player.GetCoinCount());
                 if(playerCoin >= cost)
                 {
-                    player.UpdateCoinCount(-cost);// remove the amount from player
+                     player.coinCount-=cost;// remove the amount from player
+                   // player.UpdateCoinCount(-cost);// remove the amount from player
                     Debug.Log("purchase successfulll");
                 }
                 else

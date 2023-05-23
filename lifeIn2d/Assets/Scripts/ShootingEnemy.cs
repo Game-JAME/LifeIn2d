@@ -29,7 +29,7 @@ void Update(){
       float distance = Vector2.Distance(player.position, transform.position);
 
      
-       if(Health==0f){
+       if(Health<=0f){
          DestroyEnemy(true);
        }
     if(SafeTrigger==false)
@@ -68,7 +68,10 @@ void Update(){
      if(value==true){
       Destroy(gameObject);
      }
-  
-
+    }
+    public void OnTriggerEnter2D(Collider2D collider){
+       if(collider.CompareTag("Sword")){
+        Health-=30;
+      }
     }
 }
