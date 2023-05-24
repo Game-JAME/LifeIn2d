@@ -17,13 +17,6 @@ public float Startimeshot;
  public float maxHealth;
    public float moveSpeed = 2f; 
 
-   
-
-    public float dashSpeed = 10f;
-    public float dashDuration = 0.5f;
-    public float dashCooldown = 2f;
-
-    private bool canDash = false;
     void Start()
     {
         timeShot=Startimeshot;
@@ -40,7 +33,7 @@ public float Startimeshot;
     // Update is called once per frame
     void Update()
     {       
-       if(Fightstarted==true &&canDash==false){
+       if(Fightstarted==true){
 
             healthObj.SetActive(true);
             Vector3 randomDis=new Vector2(Random.Range(playerPos.position.x+5,playerPos.position.x-5),Random.Range(playerPos.position.y+5,playerPos.position.y-5));
@@ -60,35 +53,21 @@ public float Startimeshot;
           else{
             timeShot-=Time.deltaTime;
         }
-       if( Healthslider.value < maxHealth*50/100){ 
-           DashTowardsPlayer(); 
+       if( Healthslider.value <= maxHealth*50/100){ 
+          moveSpeed+=0.05f*Time.deltaTime;
          }
        
+       }
+       if(Healthslider.value<=0){
+        Destroy(gameObject);  
        }
     }
   
     
-    void DashTowardsPlayer()
-    {
-        Vector2 direction = (playerPos.position - transform.position).normalized;
-        StartCoroutine(DashCoroutine(direction));
-        canDash = false;
-        Invoke(nameof(ResetDash), dashCooldown);
-    }
-
-    IEnumerator DashCoroutine(Vector2 direction)
-    {
-        float timer = 0f;
-        while (timer < dashDuration)
-        {
-            transform.Translate(direction * dashSpeed * Time.deltaTime);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    void ResetDash()
-    {
-        canDash = false;
+  
+    void OnTriggerEnter2D(Collider2D collider){
+        if(collider.CompareTag("Sword")){
+         Healthslider.value-=30;
+      }
     }
 }

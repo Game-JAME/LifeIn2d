@@ -103,10 +103,12 @@ MonoBehaviour:
   player: {fileID: 0}
   minDistance: 10
   orginalPos: {fileID: 0}
+  playerMovement: {fileID: 0}
   HasTriggered: 0
   moveSpeed: 10
   detectionRadius: 15
-  avoidanceDistance: 2
+  Health: 50
+  retreatDistance: 0
 --- !u!61 &9121806699122975610
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public float AttackRadius;
 public float timeShot;
 public float Startimeshot;
 [SerializeField] Transform player;
+
 [SerializeField] GameObject projectile;
 
 [SerializeField]Transform currentposition;
@@ -46,11 +47,20 @@ void Update(){
         }
         else{
             if(currentposition==null){transform.position=this.transform.position;}
-              else{transform.position=currentposition.position;}
+              else 
+              {
+                transform.position=currentposition.position;
+              }
         }
     } else{ 
-        if(currentposition==null){transform.position=this.transform.position;}
-              else{transform.position=currentposition.position;}
+          if(currentposition==null)
+            {
+              transform.position=this.transform.position;
+             }
+          else
+            { 
+              transform.position= Vector2.MoveTowards(transform.position,currentposition.position,moveSpeed*Time.deltaTime);
+             }
         }
 
       

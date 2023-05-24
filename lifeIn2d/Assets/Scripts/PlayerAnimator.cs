@@ -20,7 +20,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         // Changes the animation as the movement is more the zero or not 
         animator.SetBool(IS_WALKING, playerMovement.IsWalking());
-         if (Input.GetKeyDown(KeyCode.Space)) // Change KeyCode.Space to the desired attack button
+         if (Input.GetKeyDown(KeyCode.Mouse0)) // Change KeyCode.Space to the desired attack button
             {
                  animator.SetBool(IS_ATTACKING, true);
             }
