@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
              SceneManager.LoadScene(2);
           }
 
+<<<<<<< Updated upstream
          horizontalInput = Input.GetAxisRaw("Horizontal"); 
          verticalInput = Input.GetAxisRaw("Vertical"); 
          //transform.rotation=Quaternion.Euler(horizontalInput,verticalInput,0f);
@@ -52,6 +53,46 @@ public class PlayerMovement : MonoBehaviour
          playerPos.position += movement;
          Flip();
          
+=======
+         // calculate the movement vector based on the input and the speed
+        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;          
+         // move the game object
+        playerPos.position += movement;
+        //transform.right = movement;
+        if( horizontalInput ==0 && verticalInput == 0){
+            isWalking=false;
+        }
+        else { 
+            isWalking = true;
+        }
+        Flip();
+
+        //Debug.Log(isWalking);
+        //Debug.Log(verticalInput);
+
+
+        // restrict player to boundaries
+
+        // y-axis
+        if (playerPos.position.y >= 51.2f)
+        {
+            playerPos.position = new Vector3(playerPos.position.x,51.2f,0);
+        }
+        else if(playerPos.position.y <= -50.5f)
+        {
+            playerPos.position = new Vector3(playerPos.position.x,-50.5f,0);
+        }
+
+        // x-axis
+        if (playerPos.position.x >= 25.0f)
+        {
+            playerPos.position = new Vector3(25.0f,playerPos.position.y,0);
+        }
+        else if (playerPos.position.x <= -202.0f)
+        {
+            playerPos.position = new Vector3(-202.0f,playerPos.position.y,0);
+        }
+>>>>>>> Stashed changes
      }
 
     private void Flip()
