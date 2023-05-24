@@ -36,10 +36,7 @@ public class Enemy : MonoBehaviour
             Vector2 direction = (player.position - transform.position).normalized;
 
             // Move the enemy towards the player
-            if(transform.position != null)
-            {
-                isWalking = true;
-            }
+            
 
             transform.Translate(direction * moveSpeed * Time.deltaTime);
 

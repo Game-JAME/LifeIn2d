@@ -9,6 +9,8 @@ public class EnemiesAnimator : MonoBehaviour
     private Animator shootingEnemyAnimation;
     private Animator meleeEnemyAnimation;
     private Animator animator;
+
+    private const string IS_WALKING = "IsWalking";
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -17,16 +19,25 @@ public class EnemiesAnimator : MonoBehaviour
     private void Update()
     {
 
-        animator.SetBool("IsWalking", shootingEnemy.IsWalking());
-        animator.SetBool("IsWalking", enemy.IsWalking());
+        animator.SetBool(IS_WALKING, shootingEnemy.IsWalking());
+        animator.SetBool(IS_WALKING, enemy.IsWalking());
 
         if (enemy.transform.position != null)
         {
-            animator.SetBool("IsWalking", true);
+            animator.SetBool(IS_WALKING, true);
         }
         else
         {
-            animator.SetBool("IsWalking", false);
+            animator.SetBool(IS_WALKING, false);
+        }
+
+        if (shootingEnemy.transform.position != null)
+        {
+            animator.SetBool(IS_WALKING, true);
+        }
+        else
+        {
+            animator.SetBool(IS_WALKING, false);
         }
     }
 }
