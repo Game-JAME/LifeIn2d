@@ -7,7 +7,12 @@ public class Purchaser : MonoBehaviour
     [SerializeField] int cost = 2;
     PlayerMovement player;
     [SerializeField] bool playerInside = false; // flag to check if player inside the trigger
+<<<<<<< Updated upstream:lifeIn2d/Assets/Scenes/Purchaser.cs
     [SerializeField] GameObject item;
+=======
+    // Start is called before the first frame update
+    [SerializeField] Sprite item;
+>>>>>>> Stashed changes:lifeIn2d/Assets/Scripts/Purchaser.cs
     void Start()
     {
         player = FindObjectOfType<PlayerMovement>();
@@ -41,6 +46,7 @@ public class Purchaser : MonoBehaviour
                 {
                     player.UpdateCoinCount(-cost);// remove the amount from player
 <<<<<<< Updated upstream:lifeIn2d/Assets/Scenes/Purchaser.cs
+<<<<<<< Updated upstream:lifeIn2d/Assets/Scenes/Purchaser.cs
 =======
                     // find player object and get reference to current sword
                     GameObject playerObj = GameObject.FindWithTag("Player");
@@ -55,6 +61,9 @@ public class Purchaser : MonoBehaviour
 
 >>>>>>> Stashed changes:lifeIn2d/Assets/Scripts/Purchaser.cs
                     Debug.Log("purchase successfulll");
+=======
+                    player.changeWeapon(item);
+>>>>>>> Stashed changes:lifeIn2d/Assets/Scripts/Purchaser.cs
                 }
                 else
                 {

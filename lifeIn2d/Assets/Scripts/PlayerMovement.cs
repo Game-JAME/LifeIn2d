@@ -21,6 +21,13 @@ public class PlayerMovement : MonoBehaviour
 
     float horizontalInput;
     float verticalInput;
+<<<<<<< Updated upstream
+=======
+    private Animator animator;
+    private bool isWalking = false;
+     private bool isFacingRight = true;
+    SpriteRenderer spriterenderer;
+>>>>>>> Stashed changes
     void Start()
      {
         WaterSlider.value = 1000;
@@ -29,9 +36,14 @@ public class PlayerMovement : MonoBehaviour
  
          boss=FindObjectOfType<Boss>();  
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
         // get current sword
         sword.SetActive(false);
+>>>>>>> Stashed changes
+=======
+       sword.SetActive(false);
+       spriterenderer = gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
 >>>>>>> Stashed changes
    }
 
@@ -147,10 +159,16 @@ public class PlayerMovement : MonoBehaviour
         return coinCount;
     }
 
+<<<<<<< Updated upstream
     // function to switch sword reference
     public void SetSword(GameObject weapon)
     {
         sword = weapon;
+=======
+    public void changeWeapon(Sprite weapon)
+    {
+        spriterenderer.sprite = weapon;
+>>>>>>> Stashed changes
     }
 
      void OnTriggerEnter2D(Collider2D collider){
