@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
       public float moveSpeed = 5f; // The speed at which the enemy moves
     public float detectionRadius = 5f; // The radius within which the player triggers the movement
     public float Health = 100f;
+    public float retreatDistance;
 
     void Start()
     {
@@ -35,11 +36,14 @@ public class Enemy : MonoBehaviour
             transform.Translate(direction * moveSpeed * Time.deltaTime);
         }else{
           if(orginalPos==null)
-          { transform.position=this.transform.position;}
-          else{
-
+          {  
+            transform.position=this.transform.position;
+          }
+          else if (Vector2.Distance(transform.position,player.position)>retreatDistance){
            transform.position= Vector2.MoveTowards(transform.position,orginalPos.position,moveSpeed*Time.deltaTime);
-
+          }
+          else if(Vector2.Distance(transform.position,player.position)<retreatDistance){
+            transform.position=this.transform.position;
           }
         }
        if(Health<=0f){

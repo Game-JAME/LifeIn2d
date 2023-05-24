@@ -9,16 +9,19 @@ public class Sword : MonoBehaviour
     
     void Start()
     {
-        
+    //  sword.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0)){
-           Debug.Log("Attacking");
-
-        }
+        
+       //if(Input.GetKeyDown(KeyCode.Mouse0)){
+      //     Debug.Log("Attacking");
+      //    sword.SetActive(true);
+      //  }else{
+      //      sword.SetActive(false);
+      //  }
        
     }
   

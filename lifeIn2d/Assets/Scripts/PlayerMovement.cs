@@ -14,17 +14,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]public  int coinCount;
     [SerializeField] Boss boss;
     [SerializeField] Transform playerPos;
-
+ 
+    [SerializeField] GameObject sword;
     [SerializeField] float speed;
     [SerializeField] float reduceSpeed;
     [SerializeField] float rotateSpeed;
-    private bool isFacingRight = true;
-
+ 
     float horizontalInput;
     float verticalInput;
     private Animator animator;
     private bool isWalking = false;
-
+     private bool isFacingRight = true;
     
     void Start()
     {
@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
         Healthslider.value = 1000;
       // coinText=GetComponent<TextMeshProUGUI>();
          boss=FindObjectOfType<Boss>();  
+       sword.SetActive(false);
    }
 
    
@@ -58,19 +59,28 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;          
          // move the game object
         playerPos.position += movement;
-        //transform.right = movement;
+
+        //Checks Whether the player moves or not
         if( horizontalInput ==0 && verticalInput == 0){
             isWalking=false;
         }
         else { 
             isWalking = true;
         }
+        //Activates the sword when the player presses left mouse
+          
+        if(Input.GetKeyDown(KeyCode.Mouse0)){
+           Debug.Log("Attacking");
+           sword.SetActive(true);
+           Invoke("DisableSword",0.5f);
+        }
         Flip();
-
-        //Debug.Log(isWalking);
-        //Debug.Log(verticalInput);
      }
-
+ 
+    void DisableSword(){
+        sword.SetActive(false);
+    }
+    //Function to flip the player
     private void Flip()
     {
         if (isFacingRight && horizontalInput < 0f || !isFacingRight && horizontalInput > 0f)
@@ -126,11 +136,11 @@ public class PlayerMovement : MonoBehaviour
         boss.Fightstarted=true;
        
         }
-        if(collider.CompareTag("Boss")){
-              Healthslider.value -= 300;
-          Vector2 randomDis = new Vector2(Random.Range(transform.position.x+20,transform.position.x-20),Random.Range(transform.position.y+20,transform.position.y-20));
-          transform.position=randomDis;
-       }
+        //if(collider.CompareTag("Boss")){
+        //      Healthslider.value -= 300;
+        //  Vector2 randomDis = new Vector2(Random.Range(transform.position.x+20,transform.position.x-20),Random.Range(transform.position.y+20,transform.position.y-20));
+       //   transform.position=randomDis;
+      // }
  }
     // Returns the bool value of the trigger "IsWalking"
     public bool IsWalking()
