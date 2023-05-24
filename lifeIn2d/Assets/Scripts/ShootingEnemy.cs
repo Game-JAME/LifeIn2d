@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShootingEnemy : MonoBehaviour
 {
 
-    private bool isWalking;
+    private bool isWalking = false;
     public float speed;
     public float retreatDistance;
     public float stopDistance;
