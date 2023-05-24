@@ -28,6 +28,11 @@ public class PlayerMovement : MonoBehaviour
         Healthslider.value = 1000;
  
          boss=FindObjectOfType<Boss>();  
+<<<<<<< Updated upstream
+=======
+        // get current sword
+        sword.SetActive(false);
+>>>>>>> Stashed changes
    }
 
    
@@ -94,7 +99,16 @@ public class PlayerMovement : MonoBehaviour
         }
 >>>>>>> Stashed changes
      }
+<<<<<<< Updated upstream
 
+=======
+ 
+    void DisableSword(){
+        sword.SetActive(false);
+    }
+
+    //Function to flip the player
+>>>>>>> Stashed changes
     private void Flip()
     {
         if (isFacingRight && horizontalInput < 0f || !isFacingRight && horizontalInput > 0f)
@@ -131,6 +145,12 @@ public class PlayerMovement : MonoBehaviour
     public int GetCoinCount()
     {
         return coinCount;
+    }
+
+    // function to switch sword reference
+    public void SetSword(GameObject weapon)
+    {
+        sword = weapon;
     }
 
      void OnTriggerEnter2D(Collider2D collider){
