@@ -8,6 +8,9 @@ public class Purchaser : MonoBehaviour
     PlayerMovement player;
     [SerializeField] bool playerInside = false; // flag to check if player inside the trigger
     // Start is called before the first frame update
+
+    [SerializeField] Sprite item;
+    [SerializeField] int damage;
     void Start()
     {
         player = FindObjectOfType<PlayerMovement>();
@@ -40,8 +43,8 @@ public class Purchaser : MonoBehaviour
                 Debug.Log(player.GetCoinCount());
                 if(playerCoin >= cost)
                 {
-                     player.coinCount-=cost;// remove the amount from player
-                   // player.UpdateCoinCount(-cost);// remove the amount from player
+                    player.UpdateCoinCount(-cost);// remove the amount from player
+                    player.changeWeapon(item,damage);
                     Debug.Log("purchase successfulll");
                 }
                 else

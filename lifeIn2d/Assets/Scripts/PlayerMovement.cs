@@ -43,17 +43,19 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
     private bool isWalking = false;
-    private bool isFacingRight = true;
-
+     private bool isFacingRight = true;
+      SpriteRenderer spriterenderer;
+    
     void Start()
     {
         WaterSlider.value = 2000;
         Foodslider.value = 2000;
         Healthslider.value = 2000;
-        // coinText=GetComponent<TextMeshProUGUI>();
-        boss = FindObjectOfType<Boss>();
-        sword.SetActive(false);
-    }
+      // coinText=GetComponent<TextMeshProUGUI>();
+         boss=FindObjectOfType<Boss>();  
+       sword.SetActive(false);
+       spriterenderer = gameObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
+   }
 
     void Update()
     {
@@ -143,8 +145,7 @@ public class PlayerMovement : MonoBehaviour
         return coinCount;
     }
 
-    void OnTriggerEnter2D(Collider2D collider)
-    {
+     void OnTriggerEnter2D(Collider2D collider){
         if (collider.CompareTag("Projectile"))
         {
             Healthslider.value -= 100;
@@ -154,24 +155,16 @@ public class PlayerMovement : MonoBehaviour
             );
             transform.position = randomDis;
         }
-
-        //  if (collider.CompareTag("Enemy"))
-        //  {
-        //     Healthslider.value -= 200;
-        //     Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
-        ///     transform.position = randomDis;
-        // }
         if (collider.CompareTag("BossArea"))
         {
             boss.Fightstarted = true;
-        }
-        //if(collider.CompareTag("Boss")){
-        //      Healthslider.value -= 300;
-        //  Vector2 randomDis = new Vector2(Random.Range(transform.position.x+20,transform.position.x-20),Random.Range(transform.position.y+20,transform.position.y-20));
-        //   transform.position=randomDis;
-        // }
+        } 
     }
-
+    public void changeWeapon(Sprite weapon,int damage)
+    {
+        spriterenderer.sprite = weapon;
+        sword.GetComponent<Sword>().damage = damage;
+    }
     // Returns the bool value of the trigger "IsWalking"
     public bool IsWalking()
     {
