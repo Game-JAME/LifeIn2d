@@ -20,7 +20,7 @@ public class Water : MonoBehaviour
         if (collision.CompareTag("Player"))
         {   
           if(player.coinCount>=3){
-             player.UpdateWaterSliderValue(100);
+             player.UpdateWaterSliderValue(500);
              player.UpdateHealthSliderValue(50);
              player.coinCount-=3;
             }
