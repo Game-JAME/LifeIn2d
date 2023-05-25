@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class Boss : MonoBehaviour
 {
   [SerializeField] Slider Healthslider;
@@ -59,7 +61,8 @@ public float Startimeshot;
        
        }
        if(Healthslider.value<=0){
-        Destroy(gameObject);  
+        Destroy(gameObject);
+            SceneManager.LoadScene(3);        
        }
     }
   

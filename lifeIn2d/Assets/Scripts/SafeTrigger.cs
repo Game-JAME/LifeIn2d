@@ -7,11 +7,11 @@ public class SafeTrigger : MonoBehaviour
  
    public Enemy[] enemy;
    public ShootingEnemy[] shootingEnemies;
-    void Start(){
-   shootingEnemies=FindObjectsOfType<ShootingEnemy>();
-      enemy=FindObjectsOfType<Enemy>();
-      }
-    
+   
+    void Update(){
+      shootingEnemies=FindObjectsOfType<ShootingEnemy>();
+       enemy=FindObjectsOfType<Enemy>();
+    }
    
    void OnTriggerEnter2D(Collider2D collider){
     for (int i = 0; i < enemy.Length; i++)
