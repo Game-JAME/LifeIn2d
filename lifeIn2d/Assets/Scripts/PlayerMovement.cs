@@ -155,12 +155,24 @@ public class PlayerMovement : MonoBehaviour
             );
             transform.position = randomDis;
         }
-        if (collider.CompareTag("BossArea"))
-        {
-            boss.Fightstarted = true;
-        } 
-    }
-    public void changeWeapon(Sprite weapon,int damage)
+
+      //  if (collider.CompareTag("Enemy"))
+      //  {
+       //     Healthslider.value -= 200;
+       //     Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
+       ///     transform.position = randomDis;
+       // }
+        if(collider.CompareTag("BossArea")){
+        boss.Fightstarted=true;
+       
+        }
+        //if(collider.CompareTag("Boss")){
+        //      Healthslider.value -= 300;
+        //  Vector2 randomDis = new Vector2(Random.Range(transform.position.x+20,transform.position.x-20),Random.Range(transform.position.y+20,transform.position.y-20));
+       //   transform.position=randomDis;
+      // }
+ }
+ public void changeWeapon(Sprite weapon,int damage)
     {
         spriterenderer.sprite = weapon;
         sword.GetComponent<Sword>().damage = damage;

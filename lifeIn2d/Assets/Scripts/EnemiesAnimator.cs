@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemiesAnimator : MonoBehaviour
 {
     [SerializeField] private ShootingEnemy shootingEnemy;
-    [SerializeField] PlayerMovement player;
     private Animator animator;
      private const string IS_WALKING = "IsWalking";
       private const string IS_ATTACKING = "IsAttacking";
