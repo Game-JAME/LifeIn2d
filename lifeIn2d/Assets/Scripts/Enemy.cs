@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] EnemiesAnimator enemyAnimation;
     [SerializeField] Transform enemyPos;
     [SerializeField] Transform player;
     [SerializeField] int minDistance;
@@ -11,6 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] PlayerMovement playerMovement;
 
     private bool isWalking = false;
+    private float distance;
 
     public bool HasTriggered = false;
     public float moveSpeed = 5f; // The speed at which the enemy moves
@@ -20,6 +22,8 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        enemyAnimation = GetComponent<EnemiesAnimator>();
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerMovement = FindObjectOfType<PlayerMovement>();
     }
@@ -27,42 +31,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector2.Distance(player.position, transform.position);
-
-        // Check if the player is within the detection radius
-        if (distance <= detectionRadius && HasTriggered == false)
-        {
-            // Calculate the direction towards the player
-            Vector2 direction = (player.position - transform.position).normalized;
-
-            // Move the enemy towards the player
-            
-
-            transform.Translate(direction * moveSpeed * Time.deltaTime);
-
-        }
-        else
-        {
-            if (orginalPos == null)
-            {
-                transform.position = this.transform.position;
-            }
-            else if (Vector2.Distance(transform.position, player.position) > retreatDistance)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, orginalPos.position, moveSpeed * Time.deltaTime);
-            }
-            else if (Vector2.Distance(transform.position, player.position) < retreatDistance)
-            {
-                transform.position = this.transform.position;
-            }
-        }
-        if (Health <= 0f)
-        {
-            DestroyEnemy(true);
-        }
-        //   if(HasTriggered==true){
-        // enemyPos.position=Vector2.MoveTowards(transform.position,player.position,speed*Time.deltaTime);
-        //  }
+        chasePlayer();
     }
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -92,5 +61,47 @@ public class Enemy : MonoBehaviour
     public bool IsWalking()
     {
         return isWalking;
+    }
+
+    private void chasePlayer()
+    {
+        enemyAnimation.SetWalkingAnimation(true);
+        distance = Vector2.Distance(player.position, transform.position);
+
+        // Check if the player is within the detection radius
+        if (distance <= detectionRadius && HasTriggered == false)
+        {
+            // Calculate the direction towards the player
+            Vector2 direction = (player.position - transform.position).normalized;
+
+            if (distance > 0) {
+                // Move the enemy towards the player
+                enemyAnimation.SetWalkingAnimation(true);
+                transform.Translate(direction * moveSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            if (orginalPos == null)
+            {
+                transform.position = this.transform.position;
+            }
+            else if (Vector2.Distance(transform.position, player.position) > retreatDistance)
+            {
+                enemyAnimation.SetWalkingAnimation(true);
+                transform.position = Vector2.MoveTowards(transform.position, orginalPos.position, moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = this.transform.position;
+            }
+        }
+        if (Health <= 0f)
+        {
+            DestroyEnemy(true);
+        }
+        //   if(HasTriggered==true){
+        // enemyPos.position=Vector2.MoveTowards(transform.position,player.position,speed*Time.deltaTime);
+        //  }
     }
 }
