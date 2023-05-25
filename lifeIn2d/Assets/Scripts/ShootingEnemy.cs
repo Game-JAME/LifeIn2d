@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShootingEnemy : MonoBehaviour
 {
-
     private bool isWalking;
     public float speed;
     public float retreatDistance;
@@ -13,81 +13,155 @@ public class ShootingEnemy : MonoBehaviour
 
     public float timeShot;
     public float Startimeshot;
-    [SerializeField] Transform player;
 
-    [SerializeField] GameObject projectile;
+    [SerializeField]
+    EnemiesAnimator enemyAnimation;
 
-    [SerializeField] Transform currentposition;
+    [SerializeField]
+    Transform player;
+
+    [SerializeField]
+    GameObject projectile;
+
+    [SerializeField]
+    Transform currentposition;
     public float moveSpeed = 5f;
     public float detectionRadius = 5f;
     public bool SafeTrigger = false;
     public float Health = 50f;
+
     void Start()
     {
         timeShot = Startimeshot;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        enemyAnimation = GetComponent<EnemiesAnimator>();
+       // enemyAnimation = FindObjectOfType<EnemiesAnimator>();
     }
+
     void Update()
     {
         float distance = Vector2.Distance(player.position, transform.position);
 
-
         if (Health <= 0f)
         {
             DestroyEnemy(true);
+            return;
         }
-        if (SafeTrigger == false)
+
+        if (SafeTrigger)
         {
-            if (distance <= detectionRadius && distance > retreatDistance)
-            {
-                
-                transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-                
-            }
-            else if (Vector2.Distance(transform.position, player.position) < stopDistance && Vector2.Distance(transform.position, player.position) > retreatDistance)
-            {
-                transform.position = this.transform.position;
-            }
-            else if (Vector2.Distance(transform.position, player.position) < retreatDistance)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
-            }
-            else
-            {
-                if (currentposition == null) { transform.position = this.transform.position; }
-                else
-                {
-                    transform.position = currentposition.position;
-                }
-            }
+            HandleSafeAreaMovement();
         }
         else
         {
-            if (currentposition == null)
-            {
-                
-                transform.position = this.transform.position;
-            }
-            else
-            {
-                transform.position = Vector2.MoveTowards(transform.position, currentposition.position, moveSpeed * Time.deltaTime);
-            }
+            HandleEnemyMovement(distance);
         }
 
+       
+    }
 
+    void HandleSafeAreaMovement()
+    {
+        enemyAnimation.SetWalkingAnimation(false);
+
+        if (currentposition == null)
+        {
+            transform.position = this.transform.position;
+        }
+        else
+        {
+            transform.position = Vector2.MoveTowards(
+                transform.position,
+                currentposition.position,
+                moveSpeed * Time.deltaTime
+            );
+        }
+    }
+
+    void HandleEnemyMovement(float distance)
+    {
+        HandleEnemyOrientation();
+        if (distance <= detectionRadius && distance > stopDistance)
+        {
+            MoveTowardsPlayer();
+        }
+        else if (distance <= stopDistance && distance > retreatDistance)
+        {
+            StopMoving(distance);
+        }
+        else if (distance <= retreatDistance)
+        {
+            MoveAwayFromPlayer();
+        }
+        else
+        {
+            SetPosition();
+        }
+    }
+
+    void HandleEnemyOrientation()
+    {
+        Vector3 localScale = transform.localScale;
+
+        float direction = Mathf.Sign(player.position.x - transform.position.x);
+        localScale.x = Mathf.Abs(localScale.x) * direction;
+        transform.localScale = localScale;
+    }
+
+    void MoveTowardsPlayer()
+    {
+        transform.position = Vector2.MoveTowards(
+            transform.position,
+            player.position,
+            speed * Time.deltaTime
+        );
+        enemyAnimation.SetWalkingAnimation(true);
+    }
+
+    void StopMoving(float distance)
+    {
+        transform.position = this.transform.position;
+        enemyAnimation.SetWalkingAnimation(false);
 
         if (timeShot <= 0 && distance <= AttackRadius)
         {
-            Instantiate(projectile, transform.position, Quaternion.identity);
-            timeShot = Startimeshot;
+            ShootProjectile();
         }
         else if (distance <= AttackRadius)
         {
             timeShot -= Time.deltaTime;
         }
-
-
     }
+    void ShootProjectile()
+    {
+        Instantiate(projectile, transform.position, Quaternion.identity);
+        timeShot = Startimeshot;
+    }
+
+    void MoveAwayFromPlayer()
+    {
+        transform.position = Vector2.MoveTowards(
+            transform.position,
+            player.position,
+            -speed * Time.deltaTime
+        );
+        enemyAnimation.SetWalkingAnimation(true);
+    }
+
+    void SetPosition()
+    {
+        enemyAnimation.SetWalkingAnimation(false);
+        if (currentposition == null)
+        {
+            transform.position = this.transform.position;
+        }
+        else
+        {
+            //transform.position = currentposition.position;
+        }
+    }
+
+
     public void DestroyEnemy(bool value)
     {
         if (value == true)
@@ -95,16 +169,12 @@ public class ShootingEnemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Sword"))
         {
             Health -= 30;
         }
-    }
-
-    public bool IsWalking()
-    {
-        return isWalking;
     }
 }
