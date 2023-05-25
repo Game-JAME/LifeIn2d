@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private bool isWalking = false;
      private bool isFacingRight = true;
-    
+    SpriteRenderer spriterenderer;
     void Start()
     {
         WaterSlider.value = 1000;
@@ -34,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
       // coinText=GetComponent<TextMeshProUGUI>();
          boss=FindObjectOfType<Boss>();  
        sword.SetActive(false);
+       spriterenderer = gameObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
+
    }
 
    
@@ -119,6 +121,11 @@ public class PlayerMovement : MonoBehaviour
         return coinCount;
     }
 
+    public void changeWeapon(Sprite weapon,int damage)
+    {
+        spriterenderer.sprite = weapon;
+        sword.GetComponent<Sword>().damage = damage;
+    }
      void OnTriggerEnter2D(Collider2D collider){
         if(collider.CompareTag("Projectile")){
           Healthslider.value-=100;
