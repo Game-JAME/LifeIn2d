@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemiesAnimator : MonoBehaviour
 {
-    [SerializeField] private ShootingEnemy shootingEnemy;
+    //[SerializeField] private ShootingEnemy shootingEnemy;
     private Animator animator;
      private const string IS_WALKING = "IsWalking";
-      private const string IS_ATTACKING = "IsAttacking";
+     private const string IS_ATTACKING = "IsAttacking";
       public bool isWalking=false;
       
     public void Awake()
@@ -25,5 +25,11 @@ public class EnemiesAnimator : MonoBehaviour
     }
     public void SetWalkingAnimation(bool value){
           animator.SetBool(IS_WALKING, value);
+    }
+  
+
+    public void SetAttackAnimation(bool value)
+    {
+        animator.SetBool(IS_ATTACKING, value);
     }
 }

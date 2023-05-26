@@ -14,14 +14,14 @@ public class SafeTrigger : MonoBehaviour
     }
    
    void OnTriggerEnter2D(Collider2D collider){
-    for (int i = 0; i < enemy.Length; i++)
-    {
-        enemy[i].HasTriggered=true;
-    }
-    for (int i = 0; i < shootingEnemies.Length; i++)
-    {
+         for (int i = 0; i < enemy.Length; i++)
+      {
+          enemy[i].HasTriggered=true;
+      }
+        for (int i = 0; i < shootingEnemies.Length; i++)
+       {
         shootingEnemies[i].SafeTrigger=true;
-    }
+       }
 
    }
    void OnTriggerExit2D(Collider2D collider){

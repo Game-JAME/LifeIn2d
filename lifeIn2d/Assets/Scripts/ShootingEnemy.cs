@@ -126,6 +126,7 @@ public class ShootingEnemy : MonoBehaviour
         if (timeShot <= 0 && distance <= AttackRadius)
         {
             ShootProjectile();
+          
         }
         else if (distance <= AttackRadius)
         {
