@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 namespace DialogueSystem
 {
     public class DialogueHolder : MonoBehaviour
@@ -17,9 +17,10 @@ namespace DialogueSystem
             {
                 Deactivate();
                 transform.GetChild(i).gameObject.SetActive(true);
-                yield return new WaitUntil(()=>transform.GetChild(i).GetComponent<DialogueLine>().finished);
+                yield return new WaitUntil(()=>transform.GetChild(i).GetComponent<DialogueLine>().finished); 
             }
             // all dialogue over so go to next scene
+            SceneManager.LoadScene(2);
         }
         private void Deactivate()
         {
