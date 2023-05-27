@@ -7,6 +7,11 @@ namespace DialogueSystem
 {
     public class DialogueHolder : MonoBehaviour
     {
+        sceneLoader SceneLoader;
+        void Start()
+        {
+            SceneLoader = FindObjectOfType<sceneLoader>();
+        }
         private void Awake()
         {
             StartCoroutine(DialogueSequence());
@@ -20,7 +25,7 @@ namespace DialogueSystem
                 yield return new WaitUntil(()=>transform.GetChild(i).GetComponent<DialogueLine>().finished); 
             }
             // all dialogue over so go to next scene
-            SceneManager.LoadScene(2);
+            SceneLoader.LoadLevel(2);
         }
         private void Deactivate()
         {

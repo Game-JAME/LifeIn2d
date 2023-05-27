@@ -8,8 +8,9 @@ public class Purchaser : MonoBehaviour
     PlayerMovement player;
     [SerializeField]GameObject text;
     [SerializeField] bool playerInside = false; // flag to check if player inside the trigger
-    // Start is called before the first frame update
-
+    [SerializeField] bool isHealthItem;
+    [SerializeField] bool isWater;
+    [SerializeField] float value;
     [SerializeField] Sprite item;
     [SerializeField] int damage;
     [SerializeField] GameObject buyText;
@@ -48,7 +49,22 @@ public class Purchaser : MonoBehaviour
                 if(playerCoin >= cost)
                 {
                     player.UpdateCoinCount(-cost);// remove the amount from player
-                    player.changeWeapon(item,damage);
+                    if (isHealthItem)
+                    {
+                        if (isWater)
+                        {
+                            player.UpdateWaterSliderValue(value);
+                        }
+                        else
+                        {
+                            player.UpdateFoodSliderValue(value);
+                        }
+                        player.UpdateHealthSliderValue(50);
+                    }
+                    else
+                    {
+                        player.changeWeapon(item,damage);
+                    }
                     Debug.Log("purchase successfulll");
                 }
                 else
