@@ -43,8 +43,10 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
     private bool isWalking = false;
-     private bool isFacingRight = true;
-      SpriteRenderer spriterenderer;
+    private bool isFacingRight = true;
+    SpriteRenderer spriterenderer;
+
+    sceneLoader SceneLoaderScript;
     
     void Start()
     {
@@ -55,7 +57,8 @@ public class PlayerMovement : MonoBehaviour
          boss=FindObjectOfType<Boss>();  
        sword.SetActive(false);
        spriterenderer = gameObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
-   }
+        SceneLoaderScript = FindObjectOfType<sceneLoader>();
+    }
 
     void Update()
     {
@@ -69,7 +72,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Healthslider.value == 0)
         {
-            SceneManager.LoadScene(2);
+            
+            SceneLoaderScript.LoadLevel(3);
         }
 
         horizontalInput = Input.GetAxisRaw("Horizontal");

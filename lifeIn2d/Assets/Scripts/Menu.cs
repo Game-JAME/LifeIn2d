@@ -4,8 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
+   sceneLoader SceneLoader;
+   void Start()
+   {
+      SceneLoader = FindObjectOfType<sceneLoader>();
+   }
    public void Play(){
-      SceneManager.LoadScene(1);
+      SceneLoader.LoadLevel(1);
    }
    public void Quit(){
     Application.Quit();
