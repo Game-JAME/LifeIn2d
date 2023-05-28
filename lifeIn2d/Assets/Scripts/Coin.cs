@@ -6,9 +6,11 @@ public class Coin : MonoBehaviour
 {
     PlayerMovement player;
     // Start is called before the first frame update
+    [SerializeField] AudioSource audio;
     void Start()
     {
         player = FindObjectOfType<PlayerMovement>();
+        audio = GetComponent<AudioSource>();
         // remove coin by default after 2 sec
         Destroy(gameObject,2f);
     }
@@ -19,7 +21,16 @@ public class Coin : MonoBehaviour
         if(col.CompareTag("Player"))
         {
             player.UpdateCoinCount(1);
-            Destroy(gameObject);
+            StartCoroutine(PlayAudio());
         }
+    }
+    IEnumerator PlayAudio()
+    {
+        audio.Play();
+        while (audio.isPlaying)
+        {
+            yield return null;
+        }
+        Destroy(gameObject);
     }
 }
