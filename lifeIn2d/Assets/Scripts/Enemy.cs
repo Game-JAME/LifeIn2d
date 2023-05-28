@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int minDistance;
     [SerializeField] Transform orginalPos;
     [SerializeField] PlayerMovement playerMovement;
+    [SerializeField] AudioSource swordSound;
 
     private bool isWalking = false;
 
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerMovement = FindObjectOfType<PlayerMovement>();
         enemyAnimator = GetComponent<EnemiesAnimator>();
+        swordSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -72,12 +74,14 @@ public class Enemy : MonoBehaviour
         if (HasTriggered == false && distance <= attackRange)
         {
             enemyAnimator.SetAttackAnimation(true);
+            swordSound.Play();
             playerMovement.Healthslider.value -= 100;
             Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
             player.position = randomDis;
         }
         else
         {
+            swordSound.Stop();
             enemyAnimator.SetAttackAnimation(false);
         }
     }
