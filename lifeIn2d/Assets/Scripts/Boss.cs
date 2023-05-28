@@ -6,19 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
-  [SerializeField] public Slider Healthslider;
-  [SerializeField]GameObject healthObj;
-  [SerializeField] EnemiesAnimator enemyAnimation;
-  [SerializeField]Transform playerPos;
-  [SerializeField] PlayerMovement player;
-  [SerializeField]GameObject shootingEnemy;
-  [SerializeField]GameObject enemy;
+    [SerializeField] public Slider Healthslider;
+    [SerializeField] GameObject healthObj;
+    [SerializeField] EnemiesAnimator enemyAnimation;
+    [SerializeField] Transform playerPos;
+    [SerializeField] PlayerMovement player;
+    [SerializeField] GameObject shootingEnemy;
+    [SerializeField] GameObject enemy;
     [SerializeField] GameObject EnemySpawner;
-  public bool Fightstarted=false;
-  public float timeShot;
-  public float Startimeshot;
- public float maxHealth;
-   public float moveSpeed = 2f;
+    [SerializeField] GameObject bossFightAudio;
+    public bool Fightstarted = false;
+    public float timeShot;
+    public float Startimeshot;
+    public float maxHealth;
+    public float moveSpeed = 2f;
     public float currentHealth;
     sceneLoader SceneLoaderScript;
     bool Died = false;
@@ -26,25 +27,27 @@ public class Boss : MonoBehaviour
     {
         timeShot = Startimeshot;
         Healthslider.value = maxHealth;
+
         healthObj.SetActive(false);
-        enemyAnimation = GetComponent<EnemiesAnimator>();
+        enemyAnimation.SetBossWalkAnimation(true);
+
         playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         player = FindObjectOfType<PlayerMovement>();
-       SceneLoaderScript = FindObjectOfType<sceneLoader>();
-        enemyAnimation.SetBossWalkAnimation(true);
+        SceneLoaderScript = FindObjectOfType<sceneLoader>();
+        enemyAnimation = GetComponent<EnemiesAnimator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Flip();
-        if (Fightstarted == true && Died==false)
+        if (Fightstarted == true && Died == false)
         {
             EnemySpawner.SetActive(false);
             healthObj.SetActive(true);
             Vector2 direction = (playerPos.position - transform.position).normalized;
             transform.Translate(direction * moveSpeed * Time.deltaTime);
-          
+            bossFightAudio.SetActive(true);
             if (timeShot <= 0)
             {
                 Vector2 rand = new Vector2(Random.Range(transform.position.x + 15, transform.position.x - 15), Random.Range(transform.position.y + 15, transform.position.y - 15));
@@ -68,18 +71,18 @@ public class Boss : MonoBehaviour
         {
             Died = true;
             //Gets the enemy and shooting, and disables them
-            Enemy[] enemy=FindObjectsOfType<Enemy>();
-            ShootingEnemy[] shootingEnemy=FindObjectsOfType<ShootingEnemy>();   
+            Enemy[] enemy = FindObjectsOfType<Enemy>();
+            ShootingEnemy[] shootingEnemy = FindObjectsOfType<ShootingEnemy>();
             for (int i = 0; i < enemy.Length; i++)
             {
-                Destroy(enemy[i]);  
+                Destroy(enemy[i]);
             }
-            for(int i = 0;i < shootingEnemy.Length; i++)
+            for (int i = 0; i < shootingEnemy.Length; i++)
             {
                 Destroy(shootingEnemy[i]);
             }
             Death();
-            Invoke("LoadNextScene",3f);
+            Invoke("LoadNextScene", 3f);
         }
     }
     private void Death()
@@ -109,7 +112,7 @@ public class Boss : MonoBehaviour
         {
             Healthslider.value -= 30;
         }
-        if(Died==false)
+        if (Died == false)
         {
             if (collider.CompareTag("Player"))
             {
@@ -124,17 +127,17 @@ public class Boss : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-         Invoke("BossNotAttacking",1f);
+            Invoke("BossNotAttacking", 1f);
         }
     }
     void IsBossAttacking()
-    { 
-       enemyAnimation.SetBossAttackAnimation(true);   
+    {
+        enemyAnimation.SetBossAttackAnimation(true);
     }
     private void BossNotAttacking()
     {
         enemyAnimation.SetBossAttackAnimation(false);
     }
-    
-         
+
+
 }
