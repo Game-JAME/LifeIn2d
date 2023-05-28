@@ -6,23 +6,14 @@ public class Sword : MonoBehaviour
 {
     [SerializeField] GameObject sword;
     public int damage;
-    
-    void Start()
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-    //  sword.SetActive(false);
+        if (collision.CompareTag("Boss"))
+        {
+            Boss boss =FindObjectOfType<Boss>();
+            boss.Healthslider.value -= damage;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-       //if(Input.GetKeyDown(KeyCode.Mouse0)){
-      //     Debug.Log("Attacking");
-      //    sword.SetActive(true);
-      //  }else{
-      //      sword.SetActive(false);
-      //  }
-       
-    }
-  
 }

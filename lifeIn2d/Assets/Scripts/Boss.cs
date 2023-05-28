@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
-  [SerializeField] Slider Healthslider;
+  [SerializeField] public Slider Healthslider;
   [SerializeField]GameObject healthObj;
   [SerializeField] EnemiesAnimator enemyAnimation;
   [SerializeField]Transform playerPos;
@@ -17,14 +17,14 @@ public class Boss : MonoBehaviour
   public float timeShot;
   public float Startimeshot;
  public float maxHealth;
-   public float moveSpeed = 2f; 
+   public float moveSpeed = 2f;
+    public float currentHealth;
     sceneLoader SceneLoaderScript;
     bool Died = false;
     void Start()
     {
         timeShot = Startimeshot;
         Healthslider.value = maxHealth;
-
         healthObj.SetActive(false);
         enemyAnimation = GetComponent<EnemiesAnimator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
