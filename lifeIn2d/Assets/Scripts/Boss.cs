@@ -45,6 +45,7 @@ public class Boss : MonoBehaviour
         {
             EnemySpawner.SetActive(false);
             healthObj.SetActive(true);
+
             Vector2 direction = (playerPos.position - transform.position).normalized;
             transform.Translate(direction * moveSpeed * Time.deltaTime);
             bossFightAudio.SetActive(true);

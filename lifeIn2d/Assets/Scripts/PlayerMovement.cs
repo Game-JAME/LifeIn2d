@@ -50,11 +50,13 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] GameObject walkSound;
     [SerializeField] AudioSource swordSound;
+    [SerializeField] GameObject bossSound;
     void Start()
     {
         WaterSlider.value = 2000;
         Foodslider.value = 2000;
         Healthslider.value = 2000;
+        bossSound.SetActive(false);
         swordSound=GetComponent<AudioSource>();
         boss = FindObjectOfType<Boss>();
         sword.SetActive(false);
@@ -64,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        coinText.text = $"Coins collected: {coinCount}";
+        coinText.text = coinCount.ToString();   
         WaterSlider.value -= reduceSpeed * Time.deltaTime;
         Foodslider.value -= reduceSpeed * Time.deltaTime;
 
@@ -169,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
         if (collider.CompareTag("BossArea"))
         {
             boss.Fightstarted = true;
+            bossSound.SetActive(true);
         }
     
     }
