@@ -13,6 +13,7 @@ public class Boss : MonoBehaviour
   [SerializeField] PlayerMovement player;
   [SerializeField]GameObject shootingEnemy;
   [SerializeField]GameObject enemy;
+    [SerializeField] GameObject EnemySpawner;
   public bool Fightstarted=false;
   public float timeShot;
   public float Startimeshot;
@@ -39,6 +40,7 @@ public class Boss : MonoBehaviour
         Flip();
         if (Fightstarted == true && Died==false)
         {
+            EnemySpawner.SetActive(false);
             healthObj.SetActive(true);
             Vector2 direction = (playerPos.position - transform.position).normalized;
             transform.Translate(direction * moveSpeed * Time.deltaTime);

@@ -72,40 +72,42 @@ public class PlayerMovement : MonoBehaviour
         {
             Healthslider.value -= reduceSpeed * Time.deltaTime;
         }
-        if (Healthslider.value <= 0)
-        {
-            SceneLoaderScript.LoadLevel(4);
-        }
-
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // calculate the movement vector based on the input and the speed
-        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
-        // move the game object
-        playerPos.position += movement;
-
-        //Checks Whether the player moves or not
-        if (horizontalInput == 0 && verticalInput == 0)
+        if (Healthslider.value > 0)
         {
-            isWalking = false;
-            walkSound.SetActive(false);
+            // calculate the movement vector based on the input and the speed
+            Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
+            // move the game object
+            playerPos.position += movement;
+
+            //Checks Whether the player moves or not
+            if (horizontalInput == 0 && verticalInput == 0)
+            {
+                isWalking = false;
+                walkSound.SetActive(false);
+            }
+            else
+            {
+                isWalking = true;
+                walkSound.SetActive(true);
+            }
+            //Activates the sword when the player presses left mouse
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Debug.Log("Attacking");
+                sword.SetActive(true);
+                swordSound.Play();
+                Invoke("DisableSword", 0.5f);
+            }
+            Flip();
         }
         else
         {
-            isWalking = true;
-            walkSound.SetActive(true);
+            Invoke("LoadDeathScene", 0.8f);
         }
-        //Activates the sword when the player presses left mouse
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Debug.Log("Attacking");
-            sword.SetActive(true);
-            swordSound.Play();
-            Invoke("DisableSword", 0.5f);
-        }
-        Flip();
     }
 
     void DisableSword()
@@ -155,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Projectile"))
+        if (collider.CompareTag("Projectile")  && Healthslider.value>0)
         {
             Healthslider.value -= 100;
             Vector2 randomDis = new Vector2(
@@ -177,7 +179,11 @@ public class PlayerMovement : MonoBehaviour
     }
     // Returns the bool value of the trigger "IsWalking"
     public bool IsWalking()
+    { 
+        return isWalking;   
+    }
+    void LoadDeathScene()
     {
-        return isWalking;
+        SceneLoaderScript.LoadLevel(4);
     }
 }
