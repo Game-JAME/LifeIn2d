@@ -49,12 +49,13 @@ public class PlayerMovement : MonoBehaviour
     sceneLoader SceneLoaderScript;
 
     [SerializeField] GameObject walkSound;
+    [SerializeField] AudioSource swordSound;
     void Start()
     {
         WaterSlider.value = 2000;
         Foodslider.value = 2000;
         Healthslider.value = 2000;
-        // coinText=GetComponent<TextMeshProUGUI>();
+        swordSound=GetComponent<AudioSource>();
         boss = FindObjectOfType<Boss>();
         sword.SetActive(false);
         spriterenderer = gameObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
@@ -101,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Attacking");
             sword.SetActive(true);
+            swordSound.Play();
             Invoke("DisableSword", 0.5f);
         }
         Flip();

@@ -20,6 +20,7 @@ public class ShootingEnemy : MonoBehaviour
     [SerializeField]
     Transform player;
 
+    [SerializeField] AudioSource fireball;
     [SerializeField]
     GameObject projectile;
 
@@ -35,7 +36,7 @@ public class ShootingEnemy : MonoBehaviour
         timeShot = Startimeshot;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyAnimation = GetComponent<EnemiesAnimator>();
-       // enemyAnimation = FindObjectOfType<EnemiesAnimator>();
+        fireball=GetComponent<AudioSource>();
     }
 
     void Update()
@@ -126,7 +127,7 @@ public class ShootingEnemy : MonoBehaviour
         if (timeShot <= 0 && distance <= AttackRadius)
         {
             ShootProjectile();
-          
+          fireball.Play();
         }
         else if (distance <= AttackRadius)
         {
