@@ -10,6 +10,7 @@ namespace DialogueSystem
         public bool finished {get;private set;}
         protected IEnumerator writeText(string input,TextMeshProUGUI textHolder,float delay)
         {
+            yield return new WaitForSeconds(1.1f);
             for (int i= 0;i<input.Length;i++)
             {
                 textHolder.text += input[i];

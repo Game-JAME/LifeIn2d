@@ -6,18 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
-  [SerializeField] Slider Healthslider;
-  [SerializeField]GameObject healthObj;
-  [SerializeField] GameObject projectile;
-  [SerializeField]Transform playerPos;
-  [SerializeField] PlayerMovement player;
-  [SerializeField]GameObject shootingEnemy;
-  [SerializeField]GameObject enemy;
-  public bool Fightstarted=false;
-  public float timeShot;
-public float Startimeshot;
- public float maxHealth;
-   public float moveSpeed = 2f; 
+    [SerializeField] Slider Healthslider;
+    [SerializeField]GameObject healthObj;
+    [SerializeField] GameObject projectile;
+    [SerializeField]Transform playerPos;
+    [SerializeField] PlayerMovement player;
+    [SerializeField]GameObject shootingEnemy;
+    [SerializeField]GameObject enemy;
+    public bool Fightstarted=false;
+    public float timeShot;
+    public float Startimeshot;
+    public float maxHealth;
+    public float moveSpeed = 2f; 
+    sceneLoader SceneLoaderScript;
 
     void Start()
     {
@@ -29,6 +30,7 @@ public float Startimeshot;
 
        playerPos=GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
        player=FindObjectOfType<PlayerMovement>();
+       SceneLoaderScript = FindObjectOfType<sceneLoader>();
        
     }   
 
@@ -62,7 +64,7 @@ public float Startimeshot;
        }
        if(Healthslider.value<=0){
         Destroy(gameObject);
-            SceneManager.LoadScene(3);        
+            SceneLoaderScript.LoadLevel(3);        
        }
     }
   
