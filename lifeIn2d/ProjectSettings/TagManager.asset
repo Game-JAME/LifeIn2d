@@ -10,6 +10,7 @@ TagManager:
   - BossArea
   - Coin
   - Sword
+  - 'DangerTrigger '
   layers:
   - Default
   - TransparentFX
