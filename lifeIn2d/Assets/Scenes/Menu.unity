@@ -218,6 +218,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrossFade
       objectReference: {fileID: 0}
+    - target: {fileID: 7870462515320200090, guid: 132f9e4f850f91140984af5d0dc6e0ba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7870462515320200091, guid: 132f9e4f850f91140984af5d0dc6e0ba, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
