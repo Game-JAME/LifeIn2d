@@ -47,16 +47,17 @@ public class PlayerMovement : MonoBehaviour
     SpriteRenderer spriterenderer;
 
     sceneLoader SceneLoaderScript;
-    
+
     void Start()
     {
+
         WaterSlider.value = 2000;
         Foodslider.value = 2000;
         Healthslider.value = 2000;
-      // coinText=GetComponent<TextMeshProUGUI>();
-         boss=FindObjectOfType<Boss>();  
-       sword.SetActive(false);
-       spriterenderer = gameObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
+        // coinText=GetComponent<TextMeshProUGUI>();
+        boss = FindObjectOfType<Boss>();
+        sword.SetActive(false);
+        spriterenderer = gameObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
         SceneLoaderScript = FindObjectOfType<sceneLoader>();
     }
 
@@ -70,10 +71,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Healthslider.value -= reduceSpeed * Time.deltaTime;
         }
-        if (Healthslider.value == 0)
+        if (Healthslider.value <= 0)
         {
-            
-            SceneLoaderScript.LoadLevel(3);
+            SceneManager.LoadScene(3);
         }
 
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -149,7 +149,8 @@ public class PlayerMovement : MonoBehaviour
         return coinCount;
     }
 
-     void OnTriggerEnter2D(Collider2D collider){
+    void OnTriggerEnter2D(Collider2D collider)
+    {
         if (collider.CompareTag("Projectile"))
         {
             Healthslider.value -= 100;
@@ -159,24 +160,13 @@ public class PlayerMovement : MonoBehaviour
             );
             transform.position = randomDis;
         }
-
-      //  if (collider.CompareTag("Enemy"))
-      //  {
-       //     Healthslider.value -= 200;
-       //     Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
-       ///     transform.position = randomDis;
-       // }
-        if(collider.CompareTag("BossArea")){
-        boss.Fightstarted=true;
-       
+        if (collider.CompareTag("BossArea"))
+        {
+            boss.Fightstarted = true;
         }
-        //if(collider.CompareTag("Boss")){
-        //      Healthslider.value -= 300;
-        //  Vector2 randomDis = new Vector2(Random.Range(transform.position.x+20,transform.position.x-20),Random.Range(transform.position.y+20,transform.position.y-20));
-       //   transform.position=randomDis;
-      // }
- }
- public void changeWeapon(Sprite weapon,int damage)
+    
+    }
+    public void changeWeapon(Sprite weapon, int damage)
     {
         spriterenderer.sprite = weapon;
         sword.GetComponent<Sword>().damage = damage;
