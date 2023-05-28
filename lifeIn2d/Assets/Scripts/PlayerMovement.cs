@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         if (Healthslider.value == 0)
         {
             
-            SceneLoaderScript.LoadLevel(3);
+            SceneLoaderScript.LoadLevel(4);
         }
 
         horizontalInput = Input.GetAxisRaw("Horizontal");

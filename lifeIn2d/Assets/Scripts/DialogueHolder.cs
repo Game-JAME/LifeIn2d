@@ -8,6 +8,7 @@ namespace DialogueSystem
     public class DialogueHolder : MonoBehaviour
     {
         sceneLoader SceneLoader;
+        [SerializeField] int levelToLoad;
         void Start()
         {
             SceneLoader = FindObjectOfType<sceneLoader>();
@@ -25,7 +26,7 @@ namespace DialogueSystem
                 yield return new WaitUntil(()=>transform.GetChild(i).GetComponent<DialogueLine>().finished); 
             }
             // all dialogue over so go to next scene
-            SceneLoader.LoadLevel(2);
+            SceneLoader.LoadLevel(levelToLoad);
         }
         private void Deactivate()
         {
