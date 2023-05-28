@@ -19,6 +19,7 @@ public class Boss : MonoBehaviour
  public float maxHealth;
    public float moveSpeed = 2f; 
     sceneLoader SceneLoaderScript;
+    bool Died = false;
     void Start()
     {
         timeShot = Startimeshot;
@@ -36,7 +37,7 @@ public class Boss : MonoBehaviour
     void Update()
     {
         Flip();
-        if (Fightstarted == true && Healthslider.value>0)
+        if (Fightstarted == true && Died==false)
         {
             healthObj.SetActive(true);
             Vector2 direction = (playerPos.position - transform.position).normalized;
@@ -63,10 +64,32 @@ public class Boss : MonoBehaviour
         }
         if (Healthslider.value <= 0)
         {
+            Died = true;
+            //Gets the enemy and shooting, and disables them
+            Enemy[] enemy=FindObjectsOfType<Enemy>();
+            ShootingEnemy[] shootingEnemy=FindObjectsOfType<ShootingEnemy>();   
+            for (int i = 0; i < enemy.Length; i++)
+            {
+                Destroy(enemy[i]);  
+            }
+            for(int i = 0;i < shootingEnemy.Length; i++)
+            {
+                Destroy(shootingEnemy[i]);
+            }
             Death();
-             SceneLoaderScript.LoadLevel(3);    
-           // SceneLoaderScript.LoadLevel(3);
+            Invoke("LoadNextScene",3f);
         }
+    }
+    private void Death()
+    {
+        Destroy(gameObject, 4f);
+        transform.position = this.transform.position;
+        enemyAnimation.SetBossWalkAnimation(false);
+        enemyAnimation.BossDeathAnimation(true);
+    }
+    void LoadNextScene()
+    {
+        SceneLoaderScript.LoadLevel(3);
     }
     void Flip()
     {
@@ -84,12 +107,15 @@ public class Boss : MonoBehaviour
         {
             Healthslider.value -= 30;
         }
-        if (collider.CompareTag("Player"))
+        if(Died==false)
         {
-            player.Healthslider.value -= 150;
-            IsBossAttacking ();
-            Vector2 randomDis = new Vector2(Random.Range(playerPos.position.x + 13, playerPos.position.x - 13), Random.Range(playerPos.position.y + 13, playerPos.position.y - 13));
-            playerPos.position = randomDis;
+            if (collider.CompareTag("Player"))
+            {
+                player.Healthslider.value -= 150;
+                IsBossAttacking();
+                Vector2 randomDis = new Vector2(Random.Range(playerPos.position.x + 13, playerPos.position.x - 13), Random.Range(playerPos.position.y + 13, playerPos.position.y - 13));
+                playerPos.position = randomDis;
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -107,11 +133,6 @@ public class Boss : MonoBehaviour
     {
         enemyAnimation.SetBossAttackAnimation(false);
     }
-    private void Death()
-    {
-        Destroy(gameObject, 2f);
-        transform.position = this.transform.position;
-        enemyAnimation.SetBossWalkAnimation(false);
-        enemyAnimation.BossDeathAnimation(true);
-    }
+    
+         
 }

@@ -48,9 +48,9 @@ public class PlayerMovement : MonoBehaviour
 
     sceneLoader SceneLoaderScript;
 
+    [SerializeField] GameObject walkSound;
     void Start()
     {
-
         WaterSlider.value = 2000;
         Foodslider.value = 2000;
         Healthslider.value = 2000;
@@ -73,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Healthslider.value <= 0)
         {
-            
             SceneLoaderScript.LoadLevel(4);
         }
 
@@ -89,10 +88,12 @@ public class PlayerMovement : MonoBehaviour
         if (horizontalInput == 0 && verticalInput == 0)
         {
             isWalking = false;
+            walkSound.SetActive(false);
         }
         else
         {
             isWalking = true;
+            walkSound.SetActive(true);
         }
         //Activates the sword when the player presses left mouse
 

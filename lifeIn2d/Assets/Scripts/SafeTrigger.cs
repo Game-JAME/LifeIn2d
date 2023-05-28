@@ -9,7 +9,7 @@ public class SafeTrigger : MonoBehaviour
     public ShootingEnemy[] shootingEnemies;
     [SerializeField] GameObject dangerMusic;
     [SerializeField] GameObject safeAudio;
-
+   
     void Update()
     {
         shootingEnemies = FindObjectsOfType<ShootingEnemy>();
@@ -28,6 +28,7 @@ public class SafeTrigger : MonoBehaviour
         }
         if (collider.CompareTag("Player"))
         {
+        
             dangerMusic.SetActive(false);
             safeAudio.SetActive(true);
         }
