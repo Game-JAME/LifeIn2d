@@ -183,9 +183,10 @@ public class PlayerMovement : MonoBehaviour
         }
     
     }
-    public void changeWeapon(Sprite weapon, int damage)
+    public void changeWeapon(Sprite weapon, int damage,Vector2 spriteSize)
     {
         spriterenderer.sprite = weapon;
+        spriterenderer.size = spriteSize;
         sword.GetComponent<Sword>().damage = damage;
     }
     // Returns the bool value of the trigger "IsWalking"

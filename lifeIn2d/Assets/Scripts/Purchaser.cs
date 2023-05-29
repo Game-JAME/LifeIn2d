@@ -14,6 +14,7 @@ public class Purchaser : MonoBehaviour
     [SerializeField] Sprite item;
     [SerializeField] int damage;
     [SerializeField] GameObject buyText;
+    [SerializeField] Vector2 spriteSize; // to change weapon sprite size based on the sprite
     void Start()
     {
         text.SetActive(false);
@@ -49,6 +50,7 @@ public class Purchaser : MonoBehaviour
                 if(playerCoin >= cost)
                 {
                     player.UpdateCoinCount(-cost);// remove the amount from player
+                    gameObject.GetComponentInParent<AudioSource>().Play();
                     if (isHealthItem)
                     {
                         if (isWater)
@@ -63,7 +65,7 @@ public class Purchaser : MonoBehaviour
                     }
                     else
                     {
-                        player.changeWeapon(item,damage);
+                        player.changeWeapon(item,damage,spriteSize);
                     }
                     Debug.Log("purchase successfulll");
                 }
