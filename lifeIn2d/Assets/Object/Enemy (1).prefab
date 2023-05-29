@@ -112,7 +112,7 @@ MonoBehaviour:
   moveSpeed: 10
   detectionRadius: 15
   Health: 150
-  retreatDistance: 5
+  retreatDistance: 20
   attackRange: 1
   enemyAnimator: {fileID: 5769784518144891846}
 --- !u!61 &9121806699122975610
@@ -149,19 +149,19 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9121806699122975613}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &3667136083211468348
 Animator:
   serializedVersion: 4
