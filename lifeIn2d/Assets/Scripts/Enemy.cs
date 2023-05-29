@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     public float Health = 100f;
     public float retreatDistance;
     public float attackRange;
-
+    int rectify = 0;
    [SerializeField]  EnemiesAnimator enemyAnimator;
     void Start()
     {
@@ -73,11 +73,15 @@ public class Enemy : MonoBehaviour
         // Attack only if the player is within attack range
         if (HasTriggered == false && distance <= attackRange)
         {
+          Boss boss = FindObjectOfType<Boss>();
+            if (boss.Fightstarted == true) rectify = -10;
+            
+                Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10 + rectify, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
+                player.position = randomDis;
+            
             enemyAnimator.SetAttackAnimation(true);
             swordSound.Play();
             playerMovement.Healthslider.value -= 100;
-            Vector2 randomDis = new Vector2(Random.Range(transform.position.x + 10, transform.position.x - 10), Random.Range(transform.position.y + 10, transform.position.y - 10));
-            player.position = randomDis;
         }
         else
         {

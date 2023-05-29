@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float rotateSpeed;
 
+    int rectify = 0;
     float horizontalInput;
     float verticalInput;
     private bool isWalking = false;
@@ -167,8 +168,11 @@ public class PlayerMovement : MonoBehaviour
         if (collider.CompareTag("Projectile")  && Healthslider.value>0)
         {
             Healthslider.value -= 100;
+            Boss boss = FindObjectOfType<Boss>();
+            if (boss.Fightstarted == true) rectify = -10;
+
             Vector2 randomDis = new Vector2(
-                Random.Range(transform.position.x + 10, transform.position.x - 10),
+                Random.Range(transform.position.x + 10 + rectify, transform.position.x - 10),
                 Random.Range(transform.position.y + 10, transform.position.y - 10)
             );
             transform.position = randomDis;
