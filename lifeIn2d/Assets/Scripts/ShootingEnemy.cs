@@ -176,7 +176,8 @@ public class ShootingEnemy : MonoBehaviour
     {
         if (collider.CompareTag("Sword"))
         {
-            Health -= 30;
+            Sword sword = FindObjectOfType<Sword>();
+            Health -= sword.damage;
         }
     }
 }

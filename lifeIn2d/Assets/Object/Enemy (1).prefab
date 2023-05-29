@@ -111,7 +111,7 @@ MonoBehaviour:
   HasTriggered: 0
   moveSpeed: 10
   detectionRadius: 15
-  Health: 50
+  Health: 150
   retreatDistance: 5
   attackRange: 1
   enemyAnimator: {fileID: 5769784518144891846}

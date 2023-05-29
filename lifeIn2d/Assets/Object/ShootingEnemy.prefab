@@ -115,7 +115,7 @@ MonoBehaviour:
   moveSpeed: 2
   detectionRadius: 20
   SafeTrigger: 0
-  Health: 30
+  Health: 100
 --- !u!61 &4372964415295524730
 BoxCollider2D:
   m_ObjectHideFlags: 0

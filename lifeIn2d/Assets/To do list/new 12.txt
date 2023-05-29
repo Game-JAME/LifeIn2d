@@ -1,0 +1,3 @@
+player going above the restriction
+change code to play music at correct time
+shop sound

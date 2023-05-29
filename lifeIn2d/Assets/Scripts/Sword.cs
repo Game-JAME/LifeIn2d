@@ -13,6 +13,7 @@ public class Sword : MonoBehaviour
         {
             Boss boss =FindObjectOfType<Boss>();
             boss.Healthslider.value -= damage;
+
         }
     }
 

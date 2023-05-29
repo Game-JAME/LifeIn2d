@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 public class Boss : MonoBehaviour
 {
     [SerializeField] public Slider Healthslider;
@@ -14,7 +14,12 @@ public class Boss : MonoBehaviour
     [SerializeField] GameObject shootingEnemy;
     [SerializeField] GameObject enemy;
     [SerializeField] GameObject EnemySpawner;
+
     [SerializeField] GameObject bossFightAudio;
+    [SerializeField] GameObject calmMusic;
+    [SerializeField] GameObject tunnelMusic;
+    [SerializeField]TextMeshProUGUI text;
+    
     public bool Fightstarted = false;
     public float timeShot;
     public float Startimeshot;
@@ -23,6 +28,7 @@ public class Boss : MonoBehaviour
     public float currentHealth;
     sceneLoader SceneLoaderScript;
     bool Died = false;
+    
     void Start()
     {
         timeShot = Startimeshot;
@@ -40,9 +46,12 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        text.text = $"{Healthslider.value} / 2000 ";
         Flip();
         if (Fightstarted == true && Died == false)
         {
+            Destroy(calmMusic);
+            Destroy(tunnelMusic);
             EnemySpawner.SetActive(false);
             healthObj.SetActive(true);
 
@@ -109,10 +118,10 @@ public class Boss : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Sword"))
-        {
-            Healthslider.value -= 30;
-        }
+     //   if (collider.CompareTag("Sword"))
+   //     {
+    //        Healthslider.value -= 30;
+    //    }
         if (Died == false)
         {
             if (collider.CompareTag("Player"))

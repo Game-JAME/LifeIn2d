@@ -50,25 +50,30 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] GameObject walkSound;
     [SerializeField] AudioSource swordSound;
-    [SerializeField] GameObject bossSound;
+    [SerializeField] GameObject GongSound;
+    [SerializeField] GameObject BossFightSound;
+    [SerializeField] GameObject safeTrigger;
     void Start()
     {
         WaterSlider.value = 2000;
         Foodslider.value = 2000;
         Healthslider.value = 2000;
-        bossSound.SetActive(false);
+        GongSound.SetActive(false);
+        BossFightSound.SetActive(false);
         swordSound=GetComponent<AudioSource>();
         boss = FindObjectOfType<Boss>();
         sword.SetActive(false);
         spriterenderer = gameObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();
         SceneLoaderScript = FindObjectOfType<sceneLoader>();
+       
     }
-
     void Update()
     {
+       
         coinText.text = coinCount.ToString();   
         WaterSlider.value -= reduceSpeed * Time.deltaTime;
         Foodslider.value -= reduceSpeed * Time.deltaTime;
+        RestrictPlayerBeforeBoss(true);
 
         if (WaterSlider.value <= 0 || Foodslider.value <= 0)
         {
@@ -171,7 +176,10 @@ public class PlayerMovement : MonoBehaviour
         if (collider.CompareTag("BossArea"))
         {
             boss.Fightstarted = true;
-            bossSound.SetActive(true);
+            GongSound.SetActive(true);
+            BossFightSound.SetActive(true); 
+            safeTrigger.SetActive(false);
+            RestrictPlayerBeforeBoss(false);
         }
     
     }
@@ -188,5 +196,51 @@ public class PlayerMovement : MonoBehaviour
     void LoadDeathScene()
     {
         SceneLoaderScript.LoadLevel(4);
+    }
+    public void RestrictPlayerBeforeBoss(bool value)
+    {
+        if (value == true)
+        {
+            if (transform.position.y > 51)
+            {
+                transform.position = new Vector2(transform.position.x, 46);
+            }
+            if (transform.position.y < -46)
+            {
+                transform.position = new Vector2(transform.position.x, -42);
+            }
+        
+            if (transform.position.x > 25)
+            {
+                transform.position = new Vector2(20,transform.position.y);
+            }
+            if (transform.position.x < -205)
+            {
+                transform.position = new Vector2(-200, transform.position.y);
+            }
+        }
+        else
+        {
+            RestrictPlayerAfterBoss();
+        }
+    }
+    void RestrictPlayerAfterBoss()
+    {
+        if (transform.position.y > 51)
+        {
+            transform.position = new Vector2(transform.position.x, 49);
+        }
+        if (transform.position.y < -46)
+        {
+            transform.position = new Vector2(transform.position.x, -44);
+        }
+        if (transform.position.x > -130)
+        {
+            transform.position = new Vector2(-134, transform.position.y);
+        }
+        if (transform.position.x < -205)
+        {
+            transform.position = new Vector2(-200, transform.position.y);
+        }
     }
 }
