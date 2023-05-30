@@ -18,8 +18,8 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         if(timeSpawn<=0f){
-             Vector2 rand=new Vector2(Random.Range(transform.position.x+20,transform.position.x-20),Random.Range(transform.position.y+20,transform.position.y-20));
-            Vector2 rand2=new Vector2(Random.Range(transform.position.x+20,transform.position.x-20),Random.Range(transform.position.y+20,transform.position.y-20));
+             Vector2 rand=new Vector2(Random.Range(transform.position.x+30,transform.position.x-30),Random.Range(transform.position.y+30,transform.position.y-30));
+            Vector2 rand2=new Vector2(Random.Range(transform.position.x+30,transform.position.x-30),Random.Range(transform.position.y+30,transform.position.y-30));
 
               Instantiate(enemy,rand,Quaternion.identity);
               Instantiate(shootingEnemy,rand2,Quaternion.identity);

@@ -7,6 +7,7 @@ namespace DialogueSystem
 {
     public class DialogueBase : MonoBehaviour
     {
+     
         public bool finished {get;private set;}
         protected IEnumerator writeText(string input,TextMeshProUGUI textHolder,float delay)
         {
@@ -14,7 +15,7 @@ namespace DialogueSystem
             for (int i= 0;i<input.Length;i++)
             {
                 textHolder.text += input[i];
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.005f);
             }
             //yield return new WaitForSeconds(delay);
             yield return new WaitUntil(()=> Input.GetMouseButton(0));
